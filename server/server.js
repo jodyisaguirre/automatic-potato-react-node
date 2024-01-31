@@ -6,17 +6,17 @@ const users = [
     {
       name: "John",
       age: 30,
-      ID: 1
+      id: 1
     },
     {
       name: "Alice",
       age: 25,
-      ID: 2
+      id: 2
     },
     {
       name: "Bob",
       age: 35,
-      ID: 3
+      id: 3
     }
   ];
 
@@ -40,7 +40,7 @@ app.post("/users",(req,res) => {
 
 app.delete("/users/:id", (req,res) =>{
     const id = req.params.id
-    const userIdToBeRemoved = users.find(user => user.ID === id)
+    const userIdToBeRemoved = users.find(user => user.id === id)
     const index = users.indexOf(userIdToBeRemoved)
     
     users.splice(index,1)
