@@ -37,4 +37,14 @@ app.post("/users",(req,res) => {
     users.push(userToBeAdded)
     res.status(201).send (users)
 })
+
+app.delete("/users/:id", (req,res) =>{
+    const id = req.params.id
+    const userIdToBeRemoved = users.find(user => user.ID === id)
+    const index = users.indexOf(userIdToBeRemoved)
+    
+    users.splice(index,1)
+    res.status(201).send(users)
+
+})
 app.listen(5001, () => { console.log("Server Started on Port 5000")})
