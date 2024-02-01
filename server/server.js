@@ -39,7 +39,8 @@ app.post("/users",(req,res) => {
 })
 
 app.delete("/users/:id", (req,res) =>{
-    const id = req.params.id
+    const id = parseInt(req.params.id)
+    console.log(id)
     const userIdToBeRemoved = users.find(user => user.id === id)
     const index = users.indexOf(userIdToBeRemoved)
     
@@ -47,4 +48,4 @@ app.delete("/users/:id", (req,res) =>{
     res.status(201).send(users)
 
 })
-app.listen(5001, () => { console.log("Server Started on Port 5000")})
+app.listen(5001, () => { console.log("Server Started on Port 5001")})

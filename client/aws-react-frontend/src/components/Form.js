@@ -1,25 +1,33 @@
-import React ,{useState} from "react";
+import React, { useState } from "react";
 
 const Form = (props) => {
-    const {setData, data} = props
+  const { setData,data } = props;
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
+
   const handleNameChange = (e) => {
     setName(e.target.value);
-    console.log(e.target.value);
   };
   const handleAgeChange = (e) => {
     setAge(e.target.value);
-    console.log(e.target.value);
-    console.log(data);
   };
+  const handleAddOnSubmit = async () => {
+    const payload ={ name: name, age: age,id: data.length + 1 }
+    console.log(payload)
+    const response = await fetch('http://localhost:5001/users',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+     })
+     if(!response.ok){
+        throw new Error(`${response.status}`)
+     }
+     const results = await response.json()
+     setData(results)
+     console.log('user added')
 
-  const handleAddOnSubmit = (e) => {
-    e.preventDefault();
-    setData([...data, { name: name, age: age, id: data.length + 1 }]);
-    setAge("");
-    setName("");
-  };
+  }
+
   return (
     <form className="form" onSubmit={handleAddOnSubmit}>
       <p>Add User</p>
@@ -27,7 +35,7 @@ const Form = (props) => {
         <input
           value={name}
           onChange={handleNameChange}
-          required="true"
+          required={true}
           className="main-input"
           type="text"
         />
@@ -37,7 +45,7 @@ const Form = (props) => {
       <div className="container-1">
         <div className="group">
           <input
-            required="true"
+            required={true}
             className="main-input"
             type="text"
             value={age}

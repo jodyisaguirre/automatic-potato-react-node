@@ -27,13 +27,18 @@ const Landing = () => {
     fetchData();
   }, []);
 
- 
+  const handleDelete = async (id) => {
+    const response = await fetch(`http://localhost:5001/users/${id}`,{
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
+     })
+     if(!response.ok){
+        throw new Error(`${response.status}`)
+     }
+     const data = await response.json()
+     setData(data)
 
-  const handleDelete = (id) => {
-    const filterPersonById = data.filter((person) => person.id != id);
-    setData(filterPersonById);
-    console.log(filterPersonById);
-  };
+  }
 
   if (!data) {
     return <p>loading</p>;
@@ -48,6 +53,8 @@ const Landing = () => {
       <div className="cardContainer">
         {data.map((person, index) => (
           <Card
+            key={index}
+            index={index}
             name={person.name}
             age={person.age}
             id={person.id}

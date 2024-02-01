@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Card = (props) => {
-  const { name, age, id, handleDelete } = props;
+  const { name, age, id, handleDelete, index } = props;
 
   return (
     <div className="card">
@@ -11,6 +11,6 @@ const Card = (props) => {
       <button onClick={() => handleDelete(id)}>Delete</button>
     </div>
   );
-}; 
+};
 
-export default Card
+export default Card;
