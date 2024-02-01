@@ -1,22 +1,16 @@
 import React from 'react'
 
 const Card = (props) => {
-    const {name, age, id, handleDelete } = props
+  const { name, age, id, handleDelete } = props;
 
-    return (
-        <div className="card">
-        <p className="heading">
-            {name}
-        </p>
-        <p>
-            {age}
-        </p>
-        <p>{id}
-      </p>
+  return (
+    <div className="card">
+      <p className="heading">{name}</p>
+      <p>{age}</p>
+      <p>{id}</p>
       <button onClick={() => handleDelete(id)}>Delete</button>
-      </div>
-    )
-
-} 
+    </div>
+  );
+}; 
 
 export default Card
