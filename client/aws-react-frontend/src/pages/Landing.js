@@ -1,4 +1,5 @@
 import React , {useState,useEffect} from 'react'
+import Card from '../components/Card'
 
 const Landing = () => {
     const url ="http://localhost:5001/users"
@@ -7,7 +8,6 @@ const Landing = () => {
     const [error, setError] = useState(null)
     const [name, setName] = useState("")
     const [age, setAge] = useState("")
-    const [id, setId] = useState("")
 
 
  
@@ -49,19 +49,18 @@ const Landing = () => {
 
     const handleAddOnSubmit= (e) => {
         e.preventDefault()
-        setData([...data,{"name":name,"age":age,"id":4}])
+        setData([...data,{"name":name,"age":age,"id":data.length + 1}])
+        setAge('')
+        setName('')
         
     }
     
-    const handleIdChange = (e) =>{
-        setId(e.target.value)
-    }
+    
 
-    const handleDelete = () => {
+    const handleDelete = (id) => {
         const filterPersonById = data.filter(person => person.id != id)
         setData(filterPersonById)
         console.log(filterPersonById)
-        setId("")
     }
 
     if(!data){
@@ -75,20 +74,18 @@ const Landing = () => {
     return(
         <>
          <h1>You are now Reacting </h1>
-        {data.map((person,index) => 
-        < div key={index}>
-        <p key={person.name + index}>{person.name}</p>
-        <p key={person.id + index}>{person.id}</p>
-        </div>
-
+         <div className='cardContainer'>
+         {data.map((person,index) => 
+            <Card name={person.name} age= {person.age} id={person.id} handleDelete={handleDelete} />
         )}
+
+         </div>
         <form onSubmit={handleAddOnSubmit}>
         <input value={name} placeholder='name' onChange={handleNameChange}></input>
         <input value={age} placeholder='age' onChange={handleAgeChange}></input>
         <button type='submit'>Add Person</button>
         </form>
-        <input value={id} placeholder='Delete Person By ID' onChange={handleIdChange}></input>
-        <button onClick={handleDelete}>Delete Person By Id</button>
+
         </>
        
 
