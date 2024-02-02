@@ -1,51 +1,21 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const userRoutes = require("./routes/users");
 
-const users = [
-    {
-      name: "John",
-      age: 30,
-      id: 1
-    },
-    {
-      name: "Alice",
-      age: 25,
-      id: 2
-    },
-    {
-      name: "Bob",
-      age: 35,
-      id: 3
-    }
-  ];
+app.use(cors());
+app.use(express.json());
 
-app.use(cors())
-app.use(express.json())
-  
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
 
-app.get("/",(req,res)=>{
-    res.send("Server is running")
+app.use("/users", userRoutes);
+
+app.use((req,res) =>{
+  res.status(404).send('<h1> 404 Page not found </h1>')
 })
 
-app.get("/users",(req,res)=>{
-    res.json(users)
-})
-
-app.post("/users",(req,res) => {
-    const userToBeAdded = req.body
-    users.push(userToBeAdded)
-    res.status(201).send (users)
-})
-
-app.delete("/users/:id", (req,res) =>{
-    const id = parseInt(req.params.id)
-    console.log(id)
-    const userIdToBeRemoved = users.find(user => user.id === id)
-    const index = users.indexOf(userIdToBeRemoved)
-    
-    users.splice(index,1)
-    res.status(201).send(users)
-
-})
-app.listen(5001, () => { console.log("Server Started on Port 5001")})
+app.listen(5001, () => {
+  console.log("Server Started on Port 5001");
+});
